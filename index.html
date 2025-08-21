@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return to Joy</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to bottom right, #8EC5FC, #E0C3FC);
+            color: #333;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0c3fc;
+        }
+        h1 {
+            color: #6a11cb;
+            margin: 0;
+            font-size: 2.8rem;
+        }
+        .tagline {
+            color: #7a7a7a;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        .joy-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #6a11cb;
+        }
+        .chat-container {
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            height: 250px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 12px 15px;
+            border-radius: 18px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease;
+        }
+        .user-message {
+            background: #e0f7fa;
+            margin-left: auto;
+            text-align: right;
+            border-bottom-right-radius: 5px;
+        }
+        .ai-message {
+            background: #f1f8e9;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        .input-area {
+            display: flex;
+            margin-top: 15px;
+        }
+        input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px 0 0 25px;
+            font-size: 1rem;
+        }
+        button {
+            padding: 12px 25px;
+            background: #6a11cb;
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #4a0da9;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e0c3fc;
+            color: #7a7a7a;
+            font-size: 0.9rem;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Return to Joy</h1>
+            <p class="tagline">Your personal space for positivity and mindfulness</p>
+        </header>
+        
+        <div class="joy-section">
+            <h2>Welcome to Your Joy Journey</h2>
+            <p>This is a simple website to help you focus on positive thoughts and find joy in daily life. Take a deep breath and begin.</p>
+        </div>
+        
+        <div class="joy-section">
+            <h2>Chat with JoyBot</h2>
+            <div class="chat-container" id="chatContainer">
+                <div class="message ai-message">
+                    Hello! I'm here to help you focus on positivity. How are you feeling today?
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="userInput" placeholder="Type your thoughts here..." autocomplete="off">
+                <button onclick="addMessage()">Send</button>
+            </div>
+        </div>
+        
+        <div class="joy-section">
+            <h2>Daily Joy Prompts</h2>
+            <ul>
+                <li>What made you smile today?</li>
+                <li>Name three things you're grateful for</li>
+                <li>What activity always brings you joy?</li>
+                <li>Who is someone that makes you happy?</li>
+                <li>What's a small win you had recently?</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>Return to Joy | Simple Website Version</p>
+        </footer>
+    </div>
+
+    <script>
+        function addMessage() {
+            const userInput = document.getElementById('userInput');
+            const chatContainer = document.getElementById('chatContainer');
+            
+            if (userInput.value.trim() !== '') {
+                const userMessage = document.createElement('div');
+                userMessage.classList.add('message', 'user-message');
+                userMessage.textContent = userInput.value;
+                chatContainer.appendChild(userMessage);
+                
+                const inputText = userInput.value;
+                userInput.value = '';
+                
+                setTimeout(() => {
+                    const aiMessage = document.createElement('div');
+                    aiMessage.classList.add('message', 'ai-message');
+                    aiMessage.textContent = generateResponse(inputText);
+                    chatContainer.appendChild(aiMessage);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 1000);
+                
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        }
+        
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addMessage();
+            }
+        });
+        
+        function generateResponse(input) {
+            input = input.toLowerCase();
+            
+            if (input.includes('sad') || input.includes('unhappy') || input.includes('depress') || input.includes('bad')) {
+                return "I'm sorry you're feeling this way. Remember that difficult emotions are temporary. What's one small thing that usually brings you comfort?";
+            } else if (input.includes('happy') || input.includes('joy') || input.includes('excit') || input.includes('good')) {
+                return "It's wonderful that you're experiencing positive emotions! Savor this moment and fully appreciate these feelings.";
+            } else if (input.includes('stress') || input.includes('anxious') || input.includes('worry')) {
+                return "Stressful moments can challenge our joy. Let's try a quick grounding technique: Name five things you can see around you right now.";
+            } else if (input.includes('thank')) {
+                return "You're welcome! I'm here whenever you need to focus on joy.";
+            } else if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
+                return "Hello there! 😊 What's on your mind today?";
+            } else {
+                const responses = [
+                    "That's interesting. How does that make you feel?",
+                    "Thanks for sharing. What else brings you joy?",
+                    "I appreciate you opening up. Remember that joy often comes from appreciating small moments.",
+                    "Let's focus on the positive. What's something good that happened today?",
+                    "I understand. Sometimes acknowledging our feelings is the first step toward joy.",
+                    "Would taking a few deep breaths help right now? Let's try: Breathe in for 4 counts, hold for 2, and out for 6.",
+                    "What's one tiny thing you could do right now to bring a little light to your day?"
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+        }
+    </script>
+</body>
+</html>
