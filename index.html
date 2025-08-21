@@ -17,7 +17,7 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -45,12 +45,13 @@
             border-radius: 10px;
             border-left: 5px solid #6a11cb;
         }
+        /* Chat Styles */
         .chat-container {
             background: #fff;
             padding: 15px;
             border-radius: 10px;
             border: 1px solid #ddd;
-            height: 250px;
+            height: 200px;
             overflow-y: auto;
             margin-bottom: 15px;
         }
@@ -96,6 +97,41 @@
         button:hover {
             background: #4a0da9;
         }
+        /* Music Wheel Styles */
+        .wheel-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .wheel-btn {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 25px;
+            background: #6a11cb;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .wheel-btn:hover {
+            background: #4a0da9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        .music-result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 10px;
+            border-left: 5px solid #ffc107;
+            display: none;
+        }
+        .music-result.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
         footer {
             text-align: center;
             margin-top: 40px;
@@ -105,8 +141,8 @@
             font-size: 0.9rem;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -135,14 +171,33 @@
             </div>
         </div>
         
+        <!-- THE NEW MUSIC WHEEL SECTION -->
+        <div class="joy-section">
+            <h2>Music Mood Wheel</h2>
+            <p>Select your current mood and discover a song to help shift your energy towards joy.</p>
+            
+            <div class="wheel-container">
+                <button class="wheel-btn" onclick="getMusic('Anxious')">Anxious</button>
+                <button class="wheel-btn" onclick="getMusic('Sad')">Sad</button>
+                <button class="wheel-btn" onclick="getMusic('Tired')">Tired</button>
+                <button class="wheel-btn" onclick="getMusic('Stressed')">Stressed</button>
+                <button class="wheel-btn" onclick="getMusic('Neutral')">Neutral</button>
+                <button class="wheel-btn" onclick="getMusic('Joyful')">Joyful</button>
+            </div>
+            
+            <div id="musicResult" class="music-result">
+                <h3 id="songTitle"></h3>
+                <p id="songReason"></p>
+            </div>
+        </div>
+        <!-- END OF MUSIC WHEEL SECTION -->
+        
         <div class="joy-section">
             <h2>Daily Joy Prompts</h2>
             <ul>
                 <li>What made you smile today?</li>
                 <li>Name three things you're grateful for</li>
                 <li>What activity always brings you joy?</li>
-                <li>Who is someone that makes you happy?</li>
-                <li>What's a small win you had recently?</li>
             </ul>
         </div>
         
@@ -152,6 +207,7 @@
     </div>
 
     <script>
+        // Original Chat Functionality
         function addMessage() {
             const userInput = document.getElementById('userInput');
             const chatContainer = document.getElementById('chatContainer');
@@ -208,6 +264,48 @@
                 ];
                 return responses[Math.floor(Math.random() * responses.length)];
             }
+        }
+
+        // NEW MUSIC WHEEL FUNCTIONALITY
+        function getMusic(mood) {
+            // A simple database of mood-based song recommendations
+            const musicSuggestions = {
+                'Anxious': {
+                    title: '"Weightless" by Marconi Union',
+                    reason: 'This song is scientifically designed to reduce anxiety and lower heart rate. The calming rhythms and harmonies can help ease anxious thoughts.'
+                },
+                'Sad': {
+                    title: '"Here Comes the Sun" by The Beatles',
+                    reason: 'A gentle, hopeful reminder that difficult times are temporary and brighter days are ahead. Its simple melody is comforting and uplifting.'
+                },
+                'Tired': {
+                    title: '"Walking on Sunshine" by Katrina & The Waves',
+                    reason: 'The energetic beat and joyful lyrics can help combat fatigue and bring a burst of energizing positivity to your day.'
+                },
+                'Stressed': {
+                    title: '"Three Little Birds" by Bob Marley',
+                    reason: 'The reassuring message "don\'t worry about a thing" reminds us to release our stresses and trust that everything will be alright.'
+                },
+                'Neutral': {
+                    title: '"Happy" by Pharrell Williams',
+                    reason: 'This infectious song can help lift a neutral mood into a more positive and joyful state with its upbeat rhythm and positive message.'
+                },
+                'Joyful': {
+                    title: '"Dancing Queen" by ABBA',
+                    reason: 'Celebrate and amplify your joyful mood! This classic is perfect for embracing and expressing happy feelings through movement and music.'
+                }
+            };
+
+            // Get the suggestion for the selected mood
+            const suggestion = musicSuggestions[mood];
+            
+            // Update the page with the suggestion
+            document.getElementById('songTitle').textContent = `For ${mood}ness: ${suggestion.title}`;
+            document.getElementById('songReason').textContent = suggestion.reason;
+            
+            // Show the result box with an animation
+            const resultBox = document.getElementById('musicResult');
+            resultBox.classList.add('show');
         }
     </script>
 </body>
